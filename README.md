@@ -32,3 +32,5 @@ License
 ========
 mod\_offline\_post is almost entirely based on mod\_offline\_prowl written by Robert George <rgeorge@midnightweb.net>
 It retains the original authors license.
+
+The original post about mod\_offline\_prowl can be found [here](http://www.unsleeping.com/2010/07/31/prowl-module-for-ejabberd/)
