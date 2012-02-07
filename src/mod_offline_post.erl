@@ -59,8 +59,6 @@ stop(Host) ->
 
 send_notice(_From, To, Packet) ->
     Type = xml:get_tag_attr_s("type", Packet),
-    FromS = xml:get_tag_attr_s("from", Packet),
-    ToS   = xml:get_tag_attr_s("to", Packet),
     Body = xml:get_path_s(Packet, [{elem, "body"}, cdata]),
     Token = gen_mod:get_module_opt(To#jid.lserver, ?MODULE, auth_token, [] ),
     PostUrl = gen_mod:get_module_opt(To#jid.lserver, ?MODULE, post_url, [] ),
@@ -68,7 +66,7 @@ send_notice(_From, To, Packet) ->
 	(Type == "chat") and (Body /= "") ->
 	  Sep = "&",
 	  Post = [
-	    "to=", ToS, Sep,
+	    "to=", To#jid.luser, Sep,
 	    "from=", _From#jid.luser, Sep,
 	    "body=", Body, Sep,
 	    "access_token=", Token ],
