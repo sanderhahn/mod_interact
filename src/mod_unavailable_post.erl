@@ -39,6 +39,7 @@
 
 -include("ejabberd.hrl").
 -include("jlib.hrl").
+-import(http).
 
 start(Host, Opts) ->
     ?INFO_MSG("Starting mod_unavailable_post", [] ),
@@ -68,7 +69,7 @@ send_unavailable_notice(User, Server, _Resource, _Status) ->
 	    "jabber_id=", User, Sep,
 	    "access_token=", Token ],
 	  ?INFO_MSG("Sending post request ~p~n",[Post] ),
-	  httpc:request(post, {PostUrl, [], "application/x-www-form-urlencoded", list_to_binary(Post)},[],[]),
+	  http:request(post, {PostUrl, [], "application/x-www-form-urlencoded", list_to_binary(Post)},[],[]),
 	  ok;
 	true ->
 	  ok

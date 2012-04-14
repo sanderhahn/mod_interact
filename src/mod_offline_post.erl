@@ -39,6 +39,8 @@
 
 -include("ejabberd.hrl").
 -include("jlib.hrl").
+-import(http).
+-import(edoc_lib).
 
 start(Host, Opts) ->
     ?INFO_MSG("Starting mod_offline_post", [] ),
@@ -68,10 +70,10 @@ send_notice(_From, To, Packet) ->
 	  Post = [
 	    "to=", To#jid.luser, Sep,
 	    "from=", _From#jid.luser, Sep,
-	    "body=", Body, Sep,
+	    "body=", edoc_lib:escape_uri(Body), Sep,
 	    "access_token=", Token ],
 	  ?INFO_MSG("Sending post request ~p~n",[Post] ),
-	  httpc:request(post, {PostUrl, [], "application/x-www-form-urlencoded", list_to_binary(Post)},[],[]),
+	  http:request(post, {PostUrl, [], "application/x-www-form-urlencoded", list_to_binary(Post)},[],[]),
 	  ok;
 	true ->
 	  ok
